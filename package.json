@@ -1,5 +1,5 @@
 {
-  "name": "@redux-effects/redux-effects-location",
+  "name": "redux-effects-location",
   "description": "redux-effects middleware for dealing with location/url",
   "repository": "git://github.com/redux-effects/redux-effects-location.git",
   "version": "0.1.0",
