@@ -3,7 +3,7 @@
  */
 
 import test from 'tape'
-import redux-effects-location from '../src'
+import location from '../src'
 
 /**
  * Tests

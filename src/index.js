@@ -2,7 +2,7 @@
  * Imports
  */
 
-import DeclarativePromise from 'declarative-promise'
+import bindUrl from 'bind-url'
 
 /**
  * Vars
@@ -14,12 +14,12 @@ const types = ['GET_URL', 'SET_URL', 'BIND_URL']
  * Location effects
  */
 
-function locationMiddleware (location) {
-  location = location || window.location
+function locationMiddleware (wnd) {
+  wnd = wnd || window
 
   return ({dispatch}) => next => effect =>
     types.indexOf(effect.type) !== -1
-      ? handle(location, dispatch, effect)
+      ? handle(wnd, dispatch, effect)
       : next(effect)
 }
 
@@ -27,20 +27,18 @@ function locationMiddleware (location) {
  * Handler
  */
 
-function handle (location, dispatch, effect) {
+function handle (wnd, dispatch, effect) {
   switch (effect.type) {
     case 'GET_URL':
-      return location.pathname + location.search
+      return wnd.location.pathname + wnd.location.search
     case 'SET_URL':
-      const url = location.origin + effect.value
+      const url = wnd.location.origin + effect.value
       effect.replace
         ? location.replace(url)
         : location.assign(url)
       break
     case 'BIND_URL':
-      bindUrl(function () {
-        dispatch(effect.update(location.pathname + location.search))
-      })
+      bindUrl({wnd}, url => dispatch(effect.update(url)))
       break
   }
 }
