@@ -33,7 +33,7 @@ function handle (wnd, dispatch, action) {
     case 'GET_URL':
       return wnd.location.pathname + wnd.location.search
     case 'SET_URL':
-      const url = wnd.location.origin + action.payload.value
+      const url = action.payload.value
 
       action.payload.replace
         ? wnd.history.replaceState(null, null, url)
