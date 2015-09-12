@@ -9,18 +9,22 @@ import bindUrl from 'bind-url'
  */
 
 const types = ['GET_URL', 'SET_URL', 'BIND_URL']
+const handlers = []
 
 /**
  * Location effects
  */
 
-function locationMiddleware (wnd) {
-  wnd = wnd || window
+function locationMiddleware (wnd = window) {
+  // Setup listener
+  bindUrl({wnd}, url => run(url))
 
-  return ({dispatch}) => next => action =>
-    types.indexOf(action.type) !== -1
-      ? Promise.resolve(handle(wnd, dispatch, action))
-      : next(action)
+  return ({dispatch}) => {
+    return next => action =>
+      types.indexOf(action.type) !== -1
+        ? Promise.resolve(handle(wnd, dispatch, action))
+        : next(action)
+  }
 }
 
 /**
@@ -33,14 +37,21 @@ function handle (wnd, dispatch, action) {
       return wnd.location.pathname + wnd.location.search
     case 'SET_URL':
       const url = wnd.location.origin + action.payload.value
+
       action.payload.replace
-        ? location.replace(url)
-        : location.assign(url)
+        ? wnd.history.replaceState(null, null, url)
+        : wnd.history.pushState(null, null, url)
+
+      run(url)
       break
     case 'BIND_URL':
-      bindUrl({wnd}, url => dispatch(action.payload.update(url)))
+      handlers.push(url => dispatch(action.payload.update(url)))
       break
   }
+}
+
+function run (url) {
+  handlers.forEach(fn => fn(url))
 }
 
 /**

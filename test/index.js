@@ -1,14 +1,14 @@
-/**
- * Imports
- */
+// /**
+//  * Imports
+//  */
 
-import test from 'tape'
-import location from '../src'
+// import test from 'tape'
+// import location from '../src'
 
-/**
- * Tests
- */
+// /**
+//  * Tests
+//  */
 
-test('should work', () => {
+// test('should work', () => {
 
-})
+// })
