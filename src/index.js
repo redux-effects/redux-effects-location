@@ -19,7 +19,7 @@ function locationMiddleware (wnd) {
 
   return ({dispatch}) => next => effect =>
     types.indexOf(effect.type) !== -1
-      ? handle(wnd, dispatch, effect)
+      ? Promise.resolve(handle(wnd, dispatch, effect))
       : next(effect)
 }
 
