@@ -32,13 +32,13 @@ function handle (wnd, dispatch, action) {
     case 'GET_URL':
       return wnd.location.pathname + wnd.location.search
     case 'SET_URL':
-      const url = wnd.location.origin + action.value
-      action.replace
+      const url = wnd.location.origin + action.payload.value
+      action.payload.replace
         ? location.replace(url)
         : location.assign(url)
       break
     case 'BIND_URL':
-      bindUrl({wnd}, url => dispatch(action.update(url)))
+      bindUrl({wnd}, url => dispatch(action.payload.update(url)))
       break
   }
 }
