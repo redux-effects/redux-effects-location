@@ -16,9 +16,6 @@ const handlers = []
  */
 
 function locationMiddleware (wnd = window) {
-  // Setup listener
-  bindUrl({wnd}, url => run(url))
-
   return ({dispatch}) => {
     return next => action =>
       types.indexOf(action.type) !== -1
@@ -42,16 +39,14 @@ function handle (wnd, dispatch, action) {
         ? wnd.history.replaceState(null, null, url)
         : wnd.history.pushState(null, null, url)
 
-      run(url)
+      handlers.forEach(fn => dispatch(fn(url)))
       break
     case 'BIND_URL':
-      handlers.push(url => dispatch(action.payload.update(url)))
+      const cb = action.payload.update
+      bindUrl({wnd}, url => dispatch(cb(url)))
+      handlers.push(cb)
       break
   }
-}
-
-function run (url) {
-  handlers.forEach(fn => fn(url))
 }
 
 /**
