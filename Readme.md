@@ -9,24 +9,30 @@ redux-effects middleware for dealing with location/url
 
     $ npm install redux-effects-location
 
-## Usage
-
-This middleware recognizes three effect types:
-
-  * `GET_URL` - Get the current url, once. `{effect: 'GET_URL'}`
-  * `SET_URL` - Set the current url. `{effect: 'SET_URL', value: '/search'}`
-  * `BIND_URL` - Bind the url to an action creator. `{effect: 'BIND_URL', update: newUrl}`
-
-## Example
+## Installing the middleware
 
 ```javascript
-import location from 'declarative-location'
+import location from 'redux-effects-location'
+
+applyMiddleware(location(window))(createStore)
+
+## Usage
+
+  * `location.getUrl()` - Returns an action that gets the current url, and passes it to any bound handlers listed in `meta.steps`.
+  * `location.setUrl(url)` - Returns an action that sets the current url to `url`.
+  * `location.bindUrl(fn)` - Binds all future url changes to a function `fn` which accepts a single parameter (the new url), and returns an action to dispatch.
+
+
+## Example - Binding a redux action to location changes
+
+```javascript
+import {bindUrl} from 'redux-effects-location'
 import {createAction} from 'redux-actions'
 
 const newRoute = createAction('NEW_ROUTE')
 
 function initializeApp () {
-  return location.bind(newRoute)
+  return bindUrl(newRoute)
 }
 
 function stateReducer (state, action) {

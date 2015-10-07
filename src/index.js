@@ -5,10 +5,18 @@
 import bindUrl from 'bind-url'
 
 /**
+ * Action types
+ */
+
+const GET_URL = 'EFFECT_GET_URL'
+const SET_URL = 'EFFECT_SET_URL'
+const BIND_URL = 'EFFECT_BIND_URL'
+
+/**
  * Vars
  */
 
-const types = ['GET_URL', 'SET_URL', 'BIND_URL']
+const types = [GET_URL, SET_URL, BIND_URL]
 const handlers = []
 
 /**
@@ -30,9 +38,9 @@ function locationMiddleware (wnd = window) {
 
 function handle (wnd, dispatch, action) {
   switch (action.type) {
-    case 'GET_URL':
+    case GET_URL:
       return wnd.location.pathname + wnd.location.search
-    case 'SET_URL':
+    case SET_URL:
       const url = action.payload.value
 
       action.payload.replace
@@ -41,7 +49,7 @@ function handle (wnd, dispatch, action) {
 
       handlers.forEach(fn => dispatch(fn(url)))
       break
-    case 'BIND_URL':
+    case BIND_URL:
       const cb = action.payload.update
       bindUrl({wnd}, url => dispatch(cb(url)))
       handlers.push(cb)
@@ -50,7 +58,40 @@ function handle (wnd, dispatch, action) {
 }
 
 /**
+ * Action creators
+ */
+
+function getUrl () {
+  return {
+    type: GET_URL
+  }
+}
+
+function setUrl (url) {
+  return {
+    type: SET_URL,
+    payload: {
+      value: url
+    }
+  }
+}
+
+function bindUrl (fn) {
+  return {
+    type: BIND_URL,
+    payload: {
+      update: fn
+    }
+  }
+}
+
+/**
  * Exports
  */
 
 export default locationMiddleware
+export default {
+  getUrl,
+  setUrl,
+  bindUrl
+}
