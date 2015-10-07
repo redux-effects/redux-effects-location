@@ -2,7 +2,7 @@
  * Imports
  */
 
-import bindUrl from 'bind-url'
+import bindRealUrl from 'bind-url'
 
 /**
  * Action types
@@ -51,7 +51,7 @@ function handle (wnd, dispatch, action) {
       break
     case BIND_URL:
       const cb = action.payload.update
-      bindUrl({wnd}, url => dispatch(cb(url)))
+      bindRealUrl({wnd}, url => dispatch(cb(url)))
       handlers.push(cb)
       break
   }
