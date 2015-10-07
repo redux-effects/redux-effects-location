@@ -90,7 +90,7 @@ function bindUrl (fn) {
  */
 
 export default locationMiddleware
-export default {
+export {
   getUrl,
   setUrl,
   bindUrl
