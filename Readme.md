@@ -15,6 +15,7 @@ redux-effects middleware for dealing with location/url
 import location from 'redux-effects-location'
 
 applyMiddleware(location(window))(createStore)
+```
 
 ## Usage
 
