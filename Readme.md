@@ -57,6 +57,7 @@ function render (req) {
   applyMiddleware(location(req.url))
   // ...
 }
+```
 
 ## License
 
