@@ -24,6 +24,8 @@ const handlers = []
  */
 
 function locationMiddleware (wnd = window) {
+  const handle = typeof wnd === 'string' ? serverHandle : browserHandle
+
   return ({dispatch}) => {
     return next => action =>
       types.indexOf(action.type) !== -1
@@ -33,10 +35,25 @@ function locationMiddleware (wnd = window) {
 }
 
 /**
- * Handler
+ * Server handler
  */
 
-function handle (wnd, dispatch, action) {
+function serverHandle (url, dispatch, action) {
+  switch (action.type) {
+    case GET_URL:
+      return url
+    case BIND_URL:
+      const cb = action.payload.update
+      setTimeout(() => dispatch(cb(url)))
+      break
+  }
+}
+
+/**
+ * Browser handler
+ */
+
+function browserHandle (wnd, dispatch, action) {
   switch (action.type) {
     case GET_URL:
       return wnd.location.pathname + wnd.location.search
