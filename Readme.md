@@ -14,7 +14,7 @@ redux-effects middleware for dealing with location/url
 ```javascript
 import location from 'redux-effects-location'
 
-applyMiddleware(location(window))(createStore)
+applyMiddleware(location())(createStore)
 ```
 
 ## Usage
@@ -48,7 +48,16 @@ function stateReducer (state, action) {
 }
 ```
 
+## Using it on the server
 
+```javascript
+import location from 'redux-effects-location'
+
+function render (req) {
+  applyMiddleware(location(req.url))
+  // ...
+}
+```
 
 ## License
 
