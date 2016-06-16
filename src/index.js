@@ -84,11 +84,12 @@ function getUrl () {
   }
 }
 
-function setUrl (url) {
+function setUrl (url, replace) {
   return {
     type: SET_URL,
     payload: {
-      value: url
+      value: url,
+      replace
     }
   }
 }
