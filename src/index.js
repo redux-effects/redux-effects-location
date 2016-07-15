@@ -11,6 +11,7 @@ import bindRealUrl from 'bind-url'
 const GET_URL = 'EFFECT_GET_URL'
 const SET_URL = 'EFFECT_SET_URL'
 const BIND_URL = 'EFFECT_BIND_URL'
+const BACK = 'EFFECT_BACK'
 
 /**
  * Vars
@@ -71,6 +72,9 @@ function browserHandle (wnd, dispatch, action) {
       bindRealUrl({wnd}, url => dispatch(cb(url)))
       handlers.push(cb)
       break
+    case BACK:
+      wnd.history.back()
+      break
   }
 }
 
@@ -103,6 +107,12 @@ function bindUrl (fn) {
   }
 }
 
+function back () {
+  return {
+    type: BACK
+  }
+}
+
 /**
  * Exports
  */
@@ -111,5 +121,6 @@ export default locationMiddleware
 export {
   getUrl,
   setUrl,
-  bindUrl
+  bindUrl,
+  back
 }
