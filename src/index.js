@@ -17,7 +17,7 @@ const BACK = 'EFFECT_BACK'
  * Vars
  */
 
-const types = [GET_URL, SET_URL, BIND_URL]
+const types = [GET_URL, SET_URL, BIND_URL, BACK]
 const handlers = []
 
 /**
