@@ -62,7 +62,7 @@ function browserHandle (wnd, dispatch, action) {
       const url = action.payload.value
 
       action.payload.replace
-        ? wnd.history.replaceState(null, null, url)
+        ? wnd.history.replaceState(history.state, null, url)
         : wnd.history.pushState(null, null, url)
 
       handlers.forEach(fn => dispatch(fn(url)))
