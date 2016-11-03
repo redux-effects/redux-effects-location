@@ -29,6 +29,7 @@ function locationMiddleware (wnd) {
     return () => next => action => next(action)
   }
 
+  wnd = wnd || window
   const handle = typeof wnd === 'string' ? serverHandle : browserHandle
 
   return ({dispatch}) => {
