@@ -24,7 +24,11 @@ const handlers = []
  * Location effects
  */
 
-function locationMiddleware (wnd = window) {
+function locationMiddleware (wnd) {
+  if (typeof window === 'undefined' && typeof wnd !== 'string') {
+    return () => next => action => next(action)
+  }
+
   const handle = typeof wnd === 'string' ? serverHandle : browserHandle
 
   return ({dispatch}) => {
